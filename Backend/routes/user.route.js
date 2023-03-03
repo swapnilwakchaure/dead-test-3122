@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const cloudinary = require("cloudinary").v2;
+const jwt = require("jsonwebtoken");
 
 const { UserModel } = require("../models/user.model");
 
@@ -29,9 +30,10 @@ userRouter.get("/", async (request, response) => {
 
 
 // -------------- USER REGISTRATION POST REQUEST -------------- //
+/*
 userRouter.post("/register", async (request, response) => {
-    const { first_name, last_name, email, password } = request.body;
-    const file = request.files.avatar;
+    const { avatar, first_name, last_name, email, password } = request.body;
+    const file = avatar;
 
     try {
         cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
@@ -58,18 +60,52 @@ userRouter.post("/register", async (request, response) => {
         response.send({ "Message": "Something went wrong", "Error": error.message });
     }
 });
+*/
+
+// -------------- USER REGISTRATION POST REQUEST -------------- //
+userRouter.post("/register", async (request, response) => {
+    const { avatar, first_name, last_name, email, password } = request.body;
+
+    try {
+        if (avatar && first_name && last_name && email && password) {
+            bcrypt.hash(password, 5, async (error, hash) => {
+                if (error) {
+                    response.send({ "Massage": "Something went wrong", "Error": error.message });
+                } else {
+                    const user = new UserModel({ avatar, first_name, last_name, email, password: hash });
+                    await user.save();
+                    response.send({ "Message": "User Registration Success" });
+                }
+            });
+        } else {
+            response.send({ "Message": "All fields are required!" });
+        }
+    } catch (error) {
+        response.send({ "Message": "User Registration Failed", "Error": error.message });
+    }
+});
 
 
 // -------------- USER LOGIN POST REQUEST -------------- //
 userRouter.post("/login", async (request, response) => {
-    const payload = request.body;
+    const { email, password } = request.body;
 
     try {
-        const user = new UserModel(payload);
-        await user.save();
-        response.send({ "Message": `${payload.email} is successfully login!` });
+        const user = await UserModel.find({ email });
+        if (user.length > 0) {
+            bcrypt.compare(password, user[0].password, (error, result) => {
+                if (result) {
+                    const token = jwt.sign({ userID: user[0]._id }, "auth", { expiresIn: 60 * 60 });                      
+                    response.send({ "Message": `${user[0].first_name} successfully logged in`, "token": token, user });
+                } else {
+                    response.send({ "Message": "Incorrect Password", "Error": error });
+                }
+            })
+        } else {
+            response.send({ "Message": "Incorrect Email" });
+        }
     } catch (error) {
-        response.send({ "Message": "Login failed, please try again!", "Error": error.message });
+        response.send({ "Message": "User Login Failed", "Error": error.message });
     }
 });
 
