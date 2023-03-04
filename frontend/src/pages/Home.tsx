@@ -29,7 +29,7 @@ const Home = () => {
                             avatar={data1.avatar}
                             handleQuit={() => handleQuit("user1")}
                         />
-                         :
+                        :
                         <Error>Please Select the Player1</Error>}
                 </div>
                 <div>
