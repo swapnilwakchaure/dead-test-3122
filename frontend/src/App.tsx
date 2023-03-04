@@ -1,6 +1,5 @@
 
 import './App.css';
-import Game from './component/Game';
 import Navbar from './component/Navbar';
 import AllRoutes from './pages/AllRoutes';
 

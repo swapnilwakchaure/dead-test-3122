@@ -16,7 +16,7 @@ const Register = () => {
         e.preventDefault();
         const payload = { avatar, first_name, last_name, email, password };
 
-        fetch('http://localhost:8080/users/register', {
+        fetch('https://hungry-vestments-cod.cyclic.app/users/register', {
             method: "POST",
             body: JSON.stringify(payload),
             headers: {
