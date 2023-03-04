@@ -1,11 +1,15 @@
 
 import './App.css';
 import Game from './component/Game';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 function App() {
   return (
     <div className="App">
-      <Game/>
+      {/* <Game/> */}
+      {/* <Register /> */}
+      <Login />
     </div>
   );
 }
