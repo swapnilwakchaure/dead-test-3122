@@ -14,10 +14,6 @@ const Login = () => {
 
     const navigate = useNavigate();
 
-    let data = JSON.parse(localStorage.getItem("user1") || "");
-    // let data = (localStorage !== null);
-    console.log(data);
-
     const handleLogin = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
 
@@ -35,12 +31,12 @@ const Login = () => {
                 console.log(res.user)
                 alert(res.Message)
 
-                // if (localStorage !== null) {
-                //     localStorage.setItem("user2", JSON.stringify(res.user[0]));
-                // } else {
-                //     localStorage.setItem("user1", JSON.stringify(res.user[0]))
-                //     navigate("/")
-                // }
+                if (localStorage.getItem("user1") !== null) {
+                    localStorage.setItem("user2", JSON.stringify(res.user[0]));
+                } else {
+                    localStorage.setItem("user1", JSON.stringify(res.user[0]))
+                }
+                navigate("/")
             })
             .catch((error) => console.log(error))
     }
@@ -130,5 +126,11 @@ color: white;
     // if (JSON.parse(localStorage.getItem("user1") || "")) {
     //     localStorage.setItem("user2", JSON.stringify(res.user[0]));
     // } else {
+    //     localStorage.setItem("user1", JSON.stringify(res.user[0]));
+    // }
+
+    // if (localStorage.getItem("user1") !== null) {
+    //     localStorage.setItem("user2", JSON.stringify(res.user[0]));
+    //   } else {
     //     localStorage.setItem("user1", JSON.stringify(res.user[0]));
     // }

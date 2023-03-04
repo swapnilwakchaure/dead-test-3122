@@ -1,15 +1,14 @@
 
 import './App.css';
 import Game from './component/Game';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Navbar from './component/Navbar';
+import AllRoutes from './pages/AllRoutes';
 
 function App() {
   return (
     <div className="App">
-      {/* <Game/> */}
-      {/* <Register /> */}
-      <Login />
+      <Navbar />
+      <AllRoutes />
     </div>
   );
 }
