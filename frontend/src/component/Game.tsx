@@ -46,12 +46,16 @@ return () => clearTimeout(timer);
 }, [timeLeft]);
 
 useEffect(() => {
-// get player images from local storage or API
-// and store them in playerImages state
-const player1Image: string | null = localStorage.getItem('player1Image');
-const player2Image: string | null = localStorage.getItem('player2Image');
-setPlayerImages([player1Image || '', player2Image || '']);
+
+  const user1: string | null = localStorage.getItem('user1');
+  const user2: string | null = localStorage.getItem('user2');
+  if (user1 && user2) {
+    const player1Image = JSON.parse(user1).avatar;
+    const player2Image = JSON.parse(user2).avatar;
+    setPlayerImages([player1Image, player2Image]);
+  }
 }, []);
+
 
 
 function handleColClick(rowIndex: number, colIndex: number) {
