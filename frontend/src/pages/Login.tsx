@@ -65,7 +65,9 @@ const Login = () => {
                         />
                     </InputWrapper>
                 </DetailWrapper>
-                <Link to="/"><Button onClick={handleLogin}>LOGIN</Button></Link>
+                <Link to="/">
+                    <Button onClick={handleLogin}>LOGIN</Button>
+                </Link>
             </FormWrapper>
         </div>
     )
