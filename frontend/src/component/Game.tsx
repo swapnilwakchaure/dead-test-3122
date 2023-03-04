@@ -46,8 +46,7 @@ return () => clearTimeout(timer);
 }, [timeLeft]);
 
 useEffect(() => {
-  // get player images from local storage or API
-  // and store them in playerImages state
+
   const user1: string | null = localStorage.getItem('user1');
   const user2: string | null = localStorage.getItem('user2');
   if (user1 && user2) {
