@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
-const cors = require("cors");
+const cors = require("cors");   
 
 mongoose.set('strictQuery', true)
 
